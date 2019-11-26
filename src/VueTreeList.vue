@@ -90,6 +90,8 @@
                   v-bind:default-expanded="defaultExpanded"
                   :model="model1"
                   :key='model1.id'>
+                <slot name="leafNodeIcon" slot="leafNodeIcon"/>
+                <slot name="treeNodeIcon" slot="treeNodeIcon"/>
                 <slot name="addTreeNode" slot="addTreeNode"/>
                 <slot name="addLeafNode" slot="addLeafNode"/>
                 <slot name="editNode" slot="editNode"/>
