@@ -2,21 +2,24 @@
     <div>
         <button @click="addNode">Add Node</button>
         <vue-tree-list
-          @click="onClick"
-          @change-name="onChangeName"
-          @delete-node="onDel"
-          @add-node="onAddNode"
-          @drop="drop"
-          @drop-before="dropBefore"
-          @drop-after="dropAfter"
-          :model="data"
-          default-tree-node-name="new node"
-          default-leaf-node-name="new leaf"
-          v-bind:default-expanded="false">
-          <span class="icon" slot="addTreeNode">addTreeNode</span>
-          <span class="icon" slot="addLeafNode">addLeafNode</span>
-          <span class="icon" slot="editNode">editNode</span>
-          <span class="icon" slot="delNode">delNode</span>
+                @click="onClick"
+                @change-name="onChangeName"
+                @delete-node="onDel"
+                @add-node="onAddNode"
+                @drop="drop"
+                @drop-before="dropBefore"
+                @drop-after="dropAfter"
+                :model="data"
+                default-tree-node-name="new node"
+                default-leaf-node-name="new leaf"
+                v-bind:default-expanded="false">
+            <!--          <span class="icon" slot="addTreeNode">addTreeNode</span>-->
+            <!--          <span class="icon" slot="addLeafNode">addLeafNode</span>-->
+            <!--          <span class="icon" slot="editNode">editNode</span>-->
+<!--                      <span class="icon" slot="delNode">delNode</span>-->
+            <template v-slot:label="{item}">
+              <b>{{item.name}}</b>
+            </template>
         </vue-tree-list>
         <button @click="getNewTree">Get new tree</button>
         <pre>
@@ -26,6 +29,7 @@
 </template>
 <script>
   import { VueTreeList, Tree, TreeNode } from '../src'
+
   export default {
     components: {
       VueTreeList
@@ -84,15 +88,15 @@
         console.log(params)
       },
 
-      drop: function ({node, src, target}) {
+      drop: function ({ node, src, target }) {
         console.log('drop', node, src, target)
       },
 
-      dropBefore: function ({node, src, target}) {
+      dropBefore: function ({ node, src, target }) {
         console.log('drop-before', node, src, target)
       },
 
-      dropAfter: function ({node, src, target}) {
+      dropAfter: function ({ node, src, target }) {
         console.log('drop-after', node, src, target)
       },
 
@@ -104,6 +108,7 @@
 
       getNewTree () {
         var vm = this
+
         function _dfs (oldNode) {
           var newNode = {}
 
@@ -125,30 +130,32 @@
         vm.newTree = _dfs(vm.data)
       },
 
-      onClick(model) {
+      onClick (model) {
         console.log(model)
       }
     }
   }
 </script>
 <style lang="less" rel="stylesheet/less">
-  .vtl {
-    .vtl-drag-disabled {
-      background-color: #d0cfcf;
-      &:hover {
-        background-color: #d0cfcf;
-      }
+    .vtl {
+        .vtl-drag-disabled {
+            background-color: #d0cfcf;
+
+            &:hover {
+                background-color: #d0cfcf;
+            }
+        }
+
+        .vtl-disabled {
+            background-color: #d0cfcf;
+        }
     }
-    .vtl-disabled {
-      background-color: #d0cfcf;
-    }
-  }
 </style>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  .icon {
-    &:hover {
-      cursor: pointer;
+    .icon {
+        &:hover {
+            cursor: pointer;
+        }
     }
-  }
 </style>

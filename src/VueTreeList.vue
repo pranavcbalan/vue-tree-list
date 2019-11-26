@@ -31,10 +31,12 @@
             <i class="vtl-icon vtl-menu-icon vtl-icon-folder"></i>
           </slot>
         </span>
-
                 <div class="vtl-node-content" v-if="!editable">
-                    {{model.name}}
+                    <slot name="label" :item="itemProp">
+                        {{model.name}}
+                    </slot>
                 </div>
+
                 <input v-else class="vtl-input" type="text" ref="nodeInput" :value="model.name" @input="updateName"
                        @blur="setUnEditable">
                 <div class="vtl-operation" v-show="isHover">
@@ -95,6 +97,9 @@
                 <slot name="runNode" slot="runNode"/>
                 <slot name="extraFolderNode" slot="extraFolderNode"></slot>
                 <slot name="extraLeafNode" slot="extraLeafNode"></slot>
+                <template v-slot:label="{item}">
+                    <slot name="label" :item="item"></slot>
+                </template>
             </item>
         </div>
     </div>
